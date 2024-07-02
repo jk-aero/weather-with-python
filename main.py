@@ -1,5 +1,6 @@
 import os
 import requests
+import pygame 
 
 APIKEY=os.environ.get('weatherAPI') #hiding api key in the system environment variable
 print(APIKEY) 
@@ -22,10 +23,53 @@ else:
     windspeed_city=(api_data['wind']['speed'])
 
 
-print(weather_desc)
-print(temp_city)
-print('; degree celcius\n')
-print(humidity_city)
-print('; pascal\n')
-print(windspeed_city)
-print('; kilometer/hour\n')
+  
+# Define the background colour 
+background_colour = (50, 50, 50) 
+  
+# Define the dimensions of screen object(width,height) 
+screen = pygame.display.set_mode((600, 450)) 
+  
+# Set the caption of the screen 
+pygame.display.set_caption('weather app') 
+  
+# Fill the background colour to the screen 
+screen.fill(background_colour) 
+  
+
+  
+# Variable to keep our game loop running 
+running = True
+button = pygame.Rect(100, 200, 90, 70) 
+text = pygame.Rect(70, 150, 400, 40) 
+Color1=(150,68,98)
+
+Color2=(200,200,200)
+
+# game loop 
+while running: 
+    mousePose=pygame.mouse.get_pos()
+    if button.collidepoint(mousePose):
+        Color1=(150,95,98)
+    else:
+       Color1=(150,68,98)
+
+
+    if text.collidepoint(mousePose):
+        Color2=(255,255,255)
+    else:
+       Color2=(200,200,200)
+
+
+    pygame.draw.rect(screen, Color1, button)  # Corrected line
+    pygame.draw.rect(screen, Color2, text)  # Corrected line
+    pygame.display.flip() # Update the display using flip 
+  
+    # for loop through the event queue   
+    for event in pygame.event.get(): 
+        # Check for QUIT event       
+        if event.type == pygame.QUIT: 
+            running = False
+
+# End of game loop
+pygame.quit()
