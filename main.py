@@ -5,9 +5,9 @@ import requests
 APIKEY=os.environ.get('weatherAPI') 
 location=''
 weather_desc=''
-temp=None
-humidity=None
-windspeed=None
+temp=''
+humidity=''
+windspeed=''
 
 #api call 
 def getData():
@@ -15,7 +15,7 @@ def getData():
     api_link=requests.get(complete_api_link)
     api_data=api_link.json()
     #print(api_data)
-    global weather_desc
+    global weather_desc,temp,humidity
     weather_desc=api_data['weather'][0]['description']
     temp=(api_data['main']['temp'])-273.15
     humidity=api_data['main']['humidity']
@@ -122,13 +122,23 @@ while True:
     text_surface1 = Title_font.render(heading_text, True, BLACK)
     text_surface2 = subTitle_font.render(subHeading, True, BLACK)
     text_surface3 = subTitle_font.render("ENTER", True, WHITE)
-    weatherDes_surface = base_font.render(f"{weather_desc}", True, BLACK)
+
+    weatherDes_surface = base_font.render(f"description : {weather_desc}", True, BLACK)
+    temp_surface = base_font.render(f"temperature : {temp}", True, BLACK)
+    humidity_surface = base_font.render(f"humidity : {humidity}", True, BLACK)
+    windspeed_surface = base_font.render(f"windspeed : {windspeed}", True, BLACK)
+
 
     screen.blit(text_surface1, (60, 30))
     screen.blit(text_surface2, (250, 160))
     screen.blit(text_surface, (InputRect.x+10, InputRect.y+5))
     screen.blit(text_surface3, (ButtonRect.x+10, ButtonRect.y+13))
+
     screen.blit(weatherDes_surface, (50, 230))
+    screen.blit(temp_surface, (50, 260))
+    screen.blit(humidity_surface,( 50, 285))
+    screen.blit(windspeed_surface, (50, 310))
+
 
     #input text dynamic width
     InputRect.width=max(250,text_surface.get_width()+15)
